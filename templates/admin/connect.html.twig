@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connectez-vous à votre compte{% endblock %}
+
+{% block body %}
+
+    <div {{ svelte_component('UserForm', { 'fields': [
+        form_row(userForm.email)|raw,
+        form_row(userForm.password)|raw,
+    ] , "path": path('app_admin_login_call')}) }}></div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <section {{ svelte_component('AdminHome', {
+        'user': user.name,
+        'items': items,
+        'itemsSpecs': itemsSpecs,
+        'paths': {
+            'addItem': path('app_admin_items_add'),
+            'handleItemState': path('app_admin_items_handle_state_call'),
+            'addItemSpec': path('app_admin_items_specs_add')
+        },
+    }) }}></section>
+{% endblock %}

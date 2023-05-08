@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    {% set path=path('app_admin_items_specs_add_call') %}
+    {% if itemSpec is defined %}
+        {% set path=path('app_admin_items_specs_add_call', {'id':itemSpec.id}) %}
+    {% endif %}
+    <section {{ svelte_component('ItemsSpecs/Add', { 'fields': [
+        form_row(itemSpecForm.name)|raw,
+        form_row(itemSpecForm.valueMax)|raw,
+        form_row(itemSpecForm.placement)|raw,
+    ] , "path": path, "title": title}) }}></section>
+
+{% endblock %}
