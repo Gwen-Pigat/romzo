@@ -6,6 +6,7 @@
 
     export let fields
     export let item
+    console.log(item)
     export let itemsSpecs
     export let path
     export let pathList
@@ -67,8 +68,8 @@
         {#if itemsSpecs}
             <div class="col-items-specs">
                 {#each itemsSpecs as itemSpec}
-                    <label>{itemSpec.name}</label>
-                    <select name="items_specs[{itemSpec.id}]">
+                    <label for="item-spec-{itemSpec.id}">{itemSpec.name}</label>
+                    <select id="item-spec-{itemSpec.id}" name="items_specs[{itemSpec.id}]">
                         <option value="0">- - -</option>
                         {#each {length: 5} as _, i}
                             <option>{i+1}</option>

@@ -23,6 +23,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Ordre</th>
+                <th scope="col">Actif</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -32,6 +33,13 @@
                     <td>{itemSpec.id}</td>
                     <td>{itemSpec.name}</td>
                     <td>{itemSpec.placement}</td>
+                    <td>
+                        <fieldset>
+                            <label for="switch-state-{itemSpec.id}">
+                                <input on:click={handleState(paths.handleItemState+"?id="+itemSpec.id)} class="checkbox" type="checkbox" id="switch-state-{itemSpec.id}" name="switch-state[{itemSpec.id}}" role="switch" checked="{itemSpec.isActive}" />
+                            </label>
+                        </fieldset>
+                    </td>
                     <td>
                         <a href="{paths.addItemSpec}/{itemSpec.id}" role="button" class="contrast outline sm">
                             <Icon color="#fff" w="15" h="15"><FaEdit /></Icon>
