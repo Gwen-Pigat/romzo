@@ -49,6 +49,7 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/items/add.html.twig', [
             "title"=>"Ajouter un item",
+            "item"=>null,
             "user"=>$this->getUser(),
             "itemsSpecs"=>$this->itemsSpecsService->getItemsSpecs(),
             "itemForm"=>$this->createForm(ItemsType::class)->createView(),

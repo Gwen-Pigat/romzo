@@ -37,6 +37,9 @@ class Items
     #[ORM\OneToMany(mappedBy: 'refItems', targetEntity: ItemsSpecsItems::class, orphanRemoval: true)]
     private Collection $itemsSpecsItems;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $youtubeLink = null;
+
     public function __construct()
     {
         $this->itemsSpecsItems = new ArrayCollection();
@@ -145,6 +148,18 @@ class Items
                 $itemsSpecsItem->setRefItems(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getYoutubeLink(): ?string
+    {
+        return $this->youtubeLink;
+    }
+
+    public function setYoutubeLink(?string $youtubeLink): self
+    {
+        $this->youtubeLink = $youtubeLink;
 
         return $this;
     }

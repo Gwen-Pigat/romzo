@@ -4,13 +4,14 @@
 
 {% block body %}
     {% set path=path('app_admin_items_add_call') %}
-    {% if item is defined %}
+    {% if item is not null %}
         {% set path=path('app_admin_items_add_call', {'id':item.id}) %}
     {% endif %}
     <section {{ svelte_component('Items/Add', { 'fields': [
         form_row(itemForm.name)|raw,
         form_row(itemForm.image)|raw,
+        form_row(itemForm.youtubeLink)|raw,
         form_row(itemForm.placement)|raw,
-    ] , "path": path, "pathList": path('app_admin'), "title": title, "itemsSpecs": itemsSpecs}) }}></section>
+    ] , "path": path, "pathList": path('app_admin'), "title": title, "itemsSpecs": itemsSpecs, "item": item}) }}></section>
 
 {% endblock %}

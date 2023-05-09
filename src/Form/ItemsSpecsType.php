@@ -17,12 +17,9 @@ class ItemsSpecsType extends AbstractType
             ->add('name', TextType::class, [
                 "label"=>"Nom *"
             ])
-            ->add('valueMax', IntegerType::class, [
-                "label"=>"Valeur max (exemple 5)",
-                "required"=>false
-            ])
             ->add('placement', IntegerType::class, [
-                "label"=>"Ordre"
+                "label"=>"Ordre",
+                "required"=>false
             ])
         ;
     }

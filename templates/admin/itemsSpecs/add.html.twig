@@ -9,7 +9,6 @@
     {% endif %}
     <section {{ svelte_component('ItemsSpecs/Add', { 'fields': [
         form_row(itemSpecForm.name)|raw,
-        form_row(itemSpecForm.valueMax)|raw,
         form_row(itemSpecForm.placement)|raw,
     ] , "path": path, "title": title}) }}></section>
 

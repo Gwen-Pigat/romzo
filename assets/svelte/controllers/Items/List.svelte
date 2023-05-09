@@ -22,6 +22,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nom</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Ordre</th>
                     <th scope="col">Actif</th>
                     <th scope="col"></th>
@@ -32,6 +33,11 @@
                 <tr>
                     <td>{item.id}</td>
                     <td>{item.name}</td>
+                    <td>
+                        {#if item.image}
+                            <img src="{item.image}" alt="{item.name}" width="150" />
+                        {/if}
+                    </td>
                     <td>{item.placement}</td>
                     <td>
                         <fieldset>

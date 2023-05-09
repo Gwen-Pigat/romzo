@@ -5,8 +5,8 @@
     import Icon from "../Icon.svelte";
 
     export let fields
+    export let item
     export let itemsSpecs
-    console.log(itemsSpecs)
     export let path
     export let pathList
     export let title
@@ -18,9 +18,9 @@
         const data = new FormData(this)
 
         const btnSubmit = document.getElementById(event.currentTarget.getAttribute("data-submit"))
-        if(btnSubmit){
+        /*if(btnSubmit){
             btnSubmit.setAttribute("aria-busy","true")
-        }
+        }*/
 
         const response = await fetch(event.currentTarget.getAttribute("data-path"), {
             method: 'POST',
@@ -56,12 +56,27 @@
     <div class="success">{success}</div>
 {:else}
     <form on:submit|preventDefault={handleSubmit} data-path="{path}" data-submit="setItemBtn">
-        {#if !fields}
-            AUcun champ n'a pu être récupéré
+        <div class="col-items">
+            {#if !fields}
+                AUcun champ n'a pu être récupéré
+            {/if}
+            {#each fields as field}
+                {@html field}
+            {/each}
+        </div>
+        {#if itemsSpecs}
+            <div class="col-items-specs">
+                {#each itemsSpecs as itemSpec}
+                    <label>{itemSpec.name}</label>
+                    <select name="items_specs[{itemSpec.id}]">
+                        <option value="0">- - -</option>
+                        {#each {length: 5} as _, i}
+                            <option>{i+1}</option>
+                        {/each}
+                    </select>
+                {/each}
+            </div>
         {/if}
-        {#each fields as field}
-            {@html field}
-        {/each}
         <div class="grid">
             <a href="{pathList}" class="primary" role="button">
                 <Icon color="#fff"><IoIosArrowDropleftCircle /></Icon> Retour à la liste
@@ -77,6 +92,21 @@
 {/if}
 
 <style>
+    .grid{
+        margin-top: 2rem;
+        clear: both;
+    }
+    .col-items{
+        display: inline-block;
+        width: 50%;
+        padding: 1em;
+        float: left;
+    }
+    .col-items-specs{
+        display: inline-block;
+        width: 50%;
+        padding: 1em;
+    }
     #setItemBtn{
         margin: 0;
     }

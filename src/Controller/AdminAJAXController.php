@@ -43,6 +43,12 @@ class AdminAJAXController extends AbstractController
                 $item = $itemFetch;
             }
         }
+        if($request->files->all()["items"]["image"] !== null){
+            $item->imageWrap = $request->files->all()["items"]["image"];
+        }
+        if($request->request->all()["items_specs"] !== null){
+            $item->itemsSpecs = $request->request->all()["items_specs"];
+        }
         return new JsonResponse($this->adminService->setItems($this->createForm(ItemsType::class, $item)->submit($request->request->all()["items"], false)->getData()));
     }
 

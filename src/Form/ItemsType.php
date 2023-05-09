@@ -20,6 +20,11 @@ class ItemsType extends AbstractType
             ])
             ->add('image', FileType::class, [
                 "label"=>"Image",
+                "required"=>false,
+                "data_class"=>null
+            ])
+            ->add('youtubeLink', TextType::class, [
+                "label"=>"Lien youtube",
                 "required"=>false
             ])
             ->add('placement', IntegerType::class, [

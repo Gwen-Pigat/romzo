@@ -54,6 +54,19 @@ class ItemsSpecsRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findOneItemsSpecs(int $id): ?ItemsSpecs
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.isActive = :val')
+            ->andWhere('i.id = :id')
+            ->setParameter('val', true)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+            ;
+    }
+
 //    /**
 //     * @return ItemsSpecs[] Returns an array of ItemsSpecs objects
 //     */

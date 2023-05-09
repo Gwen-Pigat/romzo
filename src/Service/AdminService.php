@@ -4,8 +4,10 @@ namespace App\Service;
 
 use App\Entity\Items;
 use App\Entity\ItemsSpecs;
+use App\Entity\ItemsSpecsItems;
 use App\Entity\User;
 use App\Security\UserService;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminService extends CoreService
@@ -46,6 +48,15 @@ class AdminService extends CoreService
 
     public function setItems(Items $items):array
     {
+        if(isset($items->imageWrap)){
+            if($items->imageWrap instanceof UploadedFile){
+                $moveTo = "uploads/image_".CoreService::rewrite($items->getName()).".jpg";
+                if(!move_uploaded_file($items->imageWrap, $moveTo)){
+                    return CoreService::returnMessage("Une erreur a eut lieue lors de l'upload de votre image");
+                }
+                $items->setImage($moveTo);
+            }
+        }
         if($items->getId() === null){
             $items->setDateAdd(new \DateTime());
             $items->setIsActive(true);
@@ -56,6 +67,22 @@ class AdminService extends CoreService
         }
         $this->entityManager->persist($items);
         $this->entityManager->flush();
+        if(isset($items->itemsSpecs)){
+            foreach($items->itemsSpecs as $id=>$value){
+                $itemSpec = $this->entityManager->getRepository(ItemsSpecs::class)->findOneItemsSpecs($id);
+                if(!$itemSpec instanceof ItemsSpecs){
+                    return CoreService::returnMessage("Item spec introuvable");
+                }
+                $itemSpecItem = new ItemsSpecsItems();
+                $itemSpecItemFetch = $this->entityManager->getRepository(ItemsSpecsItems::class)->findOneBy(["refItems"=>$items->getId(),"refItemsSpecs"=>$itemSpec->getId()]);
+                if($itemSpecItemFetch instanceof ItemsSpecsItems){
+                    $itemSpecItem = $itemSpecItemFetch;
+                }
+                $itemSpecItem->setRefItemsSpecs($itemSpec);
+                $itemSpecItem->setRefItems($items);
+                $itemSpecItem->setValue((int)$value);
+            }
+        }
         return CoreService::returnMessage([
             "url"=>[
                 "value"=>$this->router->generate("app_admin"),

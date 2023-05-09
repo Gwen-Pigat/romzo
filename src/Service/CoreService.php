@@ -23,6 +23,12 @@ class CoreService
         return $this->entityManager->getRepository(Constants::class)->findAllByColumn();
     }
 
+    public static function rewrite(string $str):string
+    {
+        return preg_replace("/[\/_|+ -]+/", '-', strtolower(trim(preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', iconv('UTF-8', 'ASCII//TRANSLIT', $str)), '-')));
+    }
+
+
     public static function returnMessage(string|array $message, int $status=200, bool $isError=true):array
     {
         if($isError === true){
