@@ -50,7 +50,7 @@ class AdminService extends CoreService
     {
         if(isset($items->imageWrap)){
             if($items->imageWrap instanceof UploadedFile){
-                $moveTo = "uploads/image_".CoreService::rewrite($items->getName()).".jpg";
+                $moveTo = "uploads/image_".CoreService::rewrite($items->getName()).time().".jpg";
                 if(!move_uploaded_file($items->imageWrap, $moveTo)){
                     return CoreService::returnMessage("Une erreur a eut lieue lors de l'upload de votre image");
                 }
@@ -81,7 +81,9 @@ class AdminService extends CoreService
                 $itemSpecItem->setRefItemsSpecs($itemSpec);
                 $itemSpecItem->setRefItems($items);
                 $itemSpecItem->setValue((int)$value);
+                $this->entityManager->persist($itemSpecItem);
             }
+            $this->entityManager->flush();
         }
         return CoreService::returnMessage([
             "url"=>[
@@ -117,6 +119,21 @@ class AdminService extends CoreService
             $items->setIsActive(true);
         }
         $this->entityManager->persist($items);
+        $this->entityManager->flush();
+        return CoreService::returnMessage([
+            "message"=>"MAJ OK"
+        ], 200, false);
+    }
+
+
+    public function setItemsSpecsIsActive(ItemsSpecs $itemsSpecs):array
+    {
+        if($itemsSpecs->isIsActive() === true){
+            $itemsSpecs->setIsActive(false);
+        } else{
+            $itemsSpecs->setIsActive(true);
+        }
+        $this->entityManager->persist($itemsSpecs);
         $this->entityManager->flush();
         return CoreService::returnMessage([
             "message"=>"MAJ OK"

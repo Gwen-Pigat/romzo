@@ -8,9 +8,9 @@ class ItemsSpecsService extends CoreService
 {
 
 
-    public function getItemsSpecs():array
+    public function getItemsSpecs(bool $isActiveOnly=true):array
     {
-        return $this->entityManager->getRepository(ItemsSpecs::class)->findAllItemsSpecs();
+        return $this->entityManager->getRepository(ItemsSpecs::class)->findAllItemsSpecs($isActiveOnly);
     }
 
 }

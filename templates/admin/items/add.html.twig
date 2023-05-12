@@ -4,7 +4,7 @@
 
 {% block body %}
     {% set path=path('app_admin_items_add_call') %}
-    {% if item is not null %}
+    {% if item.id is not null %}
         {% set path=path('app_admin_items_add_call', {'id':item.id}) %}
     {% endif %}
     <section {{ svelte_component('Items/Add', { 'fields': [

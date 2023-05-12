@@ -42,13 +42,17 @@ class ItemsRepository extends ServiceEntityRepository
     /**
      * @return Items[] Returns an array of Constants objects
      */
-    public function findAllItems(): array
+    public function findAllItems(bool $isActiveOnly=true, string $mode="scalar"): array
     {
-        return $this->createQueryBuilder('i')
-            ->select("i.id,i.name,i.image,i.placement,i.isActive")
-            ->andWhere('i.isActive = :val')
-            ->setParameter('val', true)
-            ->orderBy('i.placement', 'ASC')
+        $query = $this->createQueryBuilder('i');
+        if($mode === "scalar"){
+            $query->select("i.id,i.name,i.image,i.placement,i.isActive");
+        }
+        if($isActiveOnly === true){
+            $query->andWhere('i.isActive = :val')
+                ->setParameter('val', true);
+        }
+        return $query->orderBy('i.placement', 'ASC')
             ->getQuery()
             ->getResult()
         ;

@@ -55,11 +55,21 @@ class AdminAJAXController extends AbstractController
     #[Route('/admin/items/handleState/call', name: 'app_admin_items_handle_state_call')]
     public function adminItemsHandleStateCall(Request $request): Response
     {
-        $items = $this->adminService->entityManager->getRepository(Items::class)->findOneBy(["isActive"=>true,"id"=>$request->query->get("id")]);
+        $items = $this->adminService->entityManager->getRepository(Items::class)->findOneBy(["id"=>$request->query->get("id")]);
         if(!$items instanceof Items){
             return new JsonResponse(CoreService::returnMessage("L'item n'a pas pu être récupéré"));
         }
         return new JsonResponse($this->adminService->setItemsIsActive($items));
+    }
+
+    #[Route('/admin/itemsSpecs/handleState/call', name: 'app_admin_items_specs_handle_state_call')]
+    public function adminItemsSpecsHandleStateCall(Request $request): Response
+    {
+        $itemsSpecs = $this->adminService->entityManager->getRepository(ItemsSpecs::class)->findOneBy(["id"=>$request->query->get("id")]);
+        if(!$itemsSpecs instanceof ItemsSpecs){
+            return new JsonResponse(CoreService::returnMessage("L'item spec n'a pas pu être récupéré"));
+        }
+        return new JsonResponse($this->adminService->setItemsSpecsIsActive($itemsSpecs));
     }
 
     #[Route('/admin/items/specs/add/call', name: 'app_admin_items_specs_add_call')]

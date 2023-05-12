@@ -2,12 +2,12 @@
     import Icon from "../Icon.svelte";
     import FaEdit from 'svelte-icons/fa/FaEdit.svelte'
     import IoMdAddCircle from 'svelte-icons/io/IoMdAddCircle.svelte'
+    import { handleState } from "../index";
 
     export let items
     export let paths = {"addItem": undefined, "handleItemState": undefined}
-    async function handleState(path){
 
-    }
+    let error = null
 
 </script>
 
@@ -16,7 +16,10 @@
 </a>
 {#if items}
     <h2>Liste des items</h2>
-    <div class="grid">
+    {#if error !== null}
+        <div class="warning">{error}</div>
+    {/if}
+    <div id="gridItems" class="grid">
         <table>
             <thead>
                 <tr>
@@ -35,14 +38,14 @@
                     <td>{item.name}</td>
                     <td>
                         {#if item.image}
-                            <img src="{item.image}" alt="{item.name}" width="150" />
+                            <img src="{item.image}" alt="{item.name}" width="150" loading="lazy" />
                         {/if}
                     </td>
-                    <td>{item.placement}</td>
+                    <td>{#if item.placement}{item.placement}{/if}</td>
                     <td>
                         <fieldset>
                             <label for="switch-state-{item.id}">
-                                <input on:click={handleState(paths.handleItemState+"?id="+item.id)} class="checkbox" type="checkbox" id="switch-state-{item.id}" name="switch-state[{item.id}}" role="switch" checked="{item.isActive}" />
+                                <input on:click={handleState(paths.handleItemState+"?id="+item.id, this)} class="checkbox" type="checkbox" id="switch-state-{item.id}" name="switch-state[{item.id}]" role="switch" checked="{item.isActive}" />
                             </label>
                         </fieldset>
                     </td>

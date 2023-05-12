@@ -25,3 +25,13 @@ export async function  handleSubmit(idForm, path){
     }
     return {error, success}
 }
+
+export async function handleState(path, event){
+    //event.setAttribute("disabled", "")
+    const response = await fetch(path, {
+        method: 'GET',
+    });
+    const result = await response.json();
+    //event.removeAttribute("disabled")
+    return result.data
+}

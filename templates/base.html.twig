@@ -18,7 +18,7 @@
     </head>
     <body>
         <div id="backgroundMain"></div>
-        <main class="container">
+        <main id="{% if user is defined %}ctAdmin{% else %}ctDefault{% endif %}" class="container">
         {% block body %}{% endblock %}
         </main>
     </body>

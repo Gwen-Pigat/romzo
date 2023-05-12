@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ constants.defaultTitle }}{% endblock %}
+
 {% block body %}
+    <h1>{{ constants.homeSentence }}</h1>
+
+    <section {{ svelte_component('Home', {
+        'items': items,
+        'socials': socials
+    }) }}></section>
 
 {% endblock %}

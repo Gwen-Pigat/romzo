@@ -19,9 +19,6 @@ class ItemsSpecs
     private ?string $name = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $valueMax = null;
-
-    #[ORM\Column(nullable: true)]
     private ?int $placement = null;
 
     #[ORM\Column]
@@ -48,18 +45,6 @@ class ItemsSpecs
     public function setName(?string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getValueMax(): ?int
-    {
-        return $this->valueMax;
-    }
-
-    public function setValueMax(?int $valueMax): self
-    {
-        $this->valueMax = $valueMax;
 
         return $this;
     }

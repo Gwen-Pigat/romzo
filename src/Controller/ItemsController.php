@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Socials;
 use App\Service\CoreService;
+use App\Service\ItemsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,11 +20,12 @@ class ItemsController extends AbstractController
     }
 
     #[Route('/', name: 'app_index')]
-    public function index(): Response
+    public function index(ItemsService $itemsService): Response
     {
         return $this->render('items/index.html.twig', [
+            'items'=>ItemsService::wrapItemsToArray($itemsService->getItems(true, "entity")),
             'constants'=>$this->coreService->getConstants(),
-            'controller_name' => 'ItemsController',
+            'socials'=>CoreService::wrapEntitiesToArray($this->coreService->entityManager->getRepository(Socials::class)->findBy(["isActive"=>true]), "nameKey")
         ]);
     }
 

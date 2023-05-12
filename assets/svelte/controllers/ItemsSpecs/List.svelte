@@ -2,12 +2,10 @@
     import Icon from "../Icon.svelte";
     import FaEdit from 'svelte-icons/fa/FaEdit.svelte'
     import IoMdAddCircle from 'svelte-icons/io/IoMdAddCircle.svelte'
+    import {handleState} from "../index";
 
     export let itemsSpecs
     export let paths = {"addItemSpec": undefined}
-    async function handleState(path){
-
-    }
 
 </script>
 
@@ -32,11 +30,11 @@
                 <tr>
                     <td>{itemSpec.id}</td>
                     <td>{itemSpec.name}</td>
-                    <td>{itemSpec.placement}</td>
+                    <td>{#if itemSpec.placement}{itemSpec.placement}{/if}</td>
                     <td>
                         <fieldset>
                             <label for="switch-state-{itemSpec.id}">
-                                <input on:click={handleState(paths.handleItemState+"?id="+itemSpec.id)} class="checkbox" type="checkbox" id="switch-state-{itemSpec.id}" name="switch-state[{itemSpec.id}}" role="switch" checked="{itemSpec.isActive}" />
+                                <input on:click={handleState(paths.handleItemSpecState+"?id="+itemSpec.id)} class="checkbox" type="checkbox" id="switch-state-{itemSpec.id}" name="switch-state[{itemSpec.id}}" role="switch" checked="{itemSpec.isActive}" />
                             </label>
                         </fieldset>
                     </td>

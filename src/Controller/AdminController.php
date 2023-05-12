@@ -9,6 +9,7 @@ use App\Form\ItemsSpecsType;
 use App\Form\ItemsType;
 use App\Form\UserType;
 use App\Service\AdminService;
+use App\Service\CoreService;
 use App\Service\ItemsService;
 use App\Service\ItemsSpecsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,8 +40,8 @@ class AdminController extends AbstractController
         }
         return $this->render('admin/index.html.twig', [
             "user"=>$user,
-            "items"=>$this->itemsService->getItems(),
-            "itemsSpecs"=>$this->itemsSpecsService->getItemsSpecs()
+            "items"=>$this->itemsService->getItems(false),
+            "itemsSpecs"=>$this->itemsSpecsService->getItemsSpecs(false)
         ]);
     }
 
@@ -49,7 +50,7 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/items/add.html.twig', [
             "title"=>"Ajouter un item",
-            "item"=>null,
+            "item"=>new Items(),
             "user"=>$this->getUser(),
             "itemsSpecs"=>$this->itemsSpecsService->getItemsSpecs(),
             "itemForm"=>$this->createForm(ItemsType::class)->createView(),
@@ -61,7 +62,7 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/items/add.html.twig', [
             "title"=>"Modifier ".$items->getName(),
-            "item"=>$items,
+            "item"=>ItemsService::wrapItemsToArray([$items])[0],
             "user"=>$this->getUser(),
             "itemsSpecs"=>$this->itemsSpecsService->getItemsSpecs(),
             "itemForm"=>$this->createForm(ItemsType::class, $items)->createView(),

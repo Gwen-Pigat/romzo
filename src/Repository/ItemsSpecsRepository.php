@@ -42,29 +42,33 @@ class ItemsSpecsRepository extends ServiceEntityRepository
     /**
      * @return ItemsSpecs[] Returns an array of Constants objects
      */
-    public function findAllItemsSpecs(): array
+    public function findAllItemsSpecs(bool $isActiveOnly=true): array
     {
-        return $this->createQueryBuilder('i')
-            ->select("i.id,i.name,i.valueMax")
-            ->andWhere('i.isActive = :val')
-            ->setParameter('val', true)
-            ->orderBy('i.placement', 'ASC')
-            ->getQuery()
-            ->getResult()
-            ;
+        $query = $this->createQueryBuilder('i')
+            ->select("i.id,i.name,i.placement,i.isActive");
+        if($isActiveOnly === true) {
+            $query->andWhere('i.isActive = :val')
+                ->setParameter('val', true);
+        }
+        return $query->orderBy('i.placement', 'ASC')
+        ->getQuery()
+        ->getResult()
+        ;
     }
 
-    public function findOneItemsSpecs(int $id): ?ItemsSpecs
+    public function findOneItemsSpecs(int $id, bool $isActiveOnly=true): ?ItemsSpecs
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.isActive = :val')
-            ->andWhere('i.id = :id')
-            ->setParameter('val', true)
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->setMaxResults(1)
-            ->getOneOrNullResult()
-            ;
+        $query = $this->createQueryBuilder('i')
+            ->andWhere('i.id = :id');
+        if($isActiveOnly === true) {
+            $query->andWhere('i.isActive = :val')
+                ->setParameter('val', true);
+        }
+        return $query->setParameter('id', $id)
+        ->getQuery()
+        ->setMaxResults(1)
+        ->getOneOrNullResult()
+        ;
     }
 
 //    /**

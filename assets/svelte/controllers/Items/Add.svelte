@@ -6,7 +6,7 @@
 
     export let fields
     export let item
-    console.log(item)
+
     export let itemsSpecs
     export let path
     export let pathList
@@ -19,21 +19,19 @@
         const data = new FormData(this)
 
         const btnSubmit = document.getElementById(event.currentTarget.getAttribute("data-submit"))
-        /*if(btnSubmit){
-            btnSubmit.setAttribute("aria-busy","true")
-        }*/
+        if(btnSubmit){
+            //btnSubmit.setAttribute("aria-busy","true")
+        }
 
         const response = await fetch(event.currentTarget.getAttribute("data-path"), {
             method: 'POST',
             body: data
         });
         const result = await response.json();
-        btnSubmit.removeAttribute("aria-busy")
 
         if(result.data.error){
             error = result.data.error
-        } else{
-            success = result.data.message
+            btnSubmit.removeAttribute("aria-busy")
         }
         if(result.data.url){
             let timer = 0
@@ -58,6 +56,11 @@
 {:else}
     <form on:submit|preventDefault={handleSubmit} data-path="{path}" data-submit="setItemBtn">
         <div class="col-items">
+            <h2>Informations générales</h2>
+            {#if item.image}
+                <p>Image actuelle choisie :</p>
+                <img src="{item.image}" alt="{item.name}" />
+            {/if}
             {#if !fields}
                 AUcun champ n'a pu être récupéré
             {/if}
@@ -67,12 +70,17 @@
         </div>
         {#if itemsSpecs}
             <div class="col-items-specs">
+                <h2>Renseigner les specs techniques</h2>
                 {#each itemsSpecs as itemSpec}
                     <label for="item-spec-{itemSpec.id}">{itemSpec.name}</label>
                     <select id="item-spec-{itemSpec.id}" name="items_specs[{itemSpec.id}]">
                         <option value="0">- - -</option>
                         {#each {length: 5} as _, i}
-                            <option>{i+1}</option>
+                            {#if item.itemsSpecsItems && item.itemsSpecsItems[itemSpec.id] && item.itemsSpecsItems[itemSpec.id] === (i+1)}
+                                <option selected="selected">{i+1}</option>
+                            {:else}
+                                <option>{i+1}</option>
+                            {/if}
                         {/each}
                     </select>
                 {/each}
@@ -97,16 +105,11 @@
         margin-top: 2rem;
         clear: both;
     }
-    .col-items{
-        display: inline-block;
-        width: 50%;
-        padding: 1em;
-        float: left;
+    .col-items img{
+        margin-bottom: 1rem;
     }
     .col-items-specs{
-        display: inline-block;
-        width: 50%;
-        padding: 1em;
+        margin-top: 1rem;
     }
     #setItemBtn{
         margin: 0;

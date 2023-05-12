@@ -23,6 +23,35 @@ class CoreService
         return $this->entityManager->getRepository(Constants::class)->findAllByColumn();
     }
 
+
+
+    public static function wrapEntitiesToArray(mixed $items, string $column=null):array
+    {
+        $data = [];
+        foreach($items as $keyI=>$item) {
+            $oneData = (array)$item;
+            if (empty($oneData)) {
+                continue;
+            }
+            foreach ($oneData as $key => $value) {
+                unset($oneData[$key]);
+                if ($value === null) {
+                    continue;
+                }
+                $oneData[explode("\x00", $key)[2]] = $value;
+            }
+            if(empty($oneData)){
+                continue;
+            }
+            if($column !== null && array_key_exists($column,$oneData)){
+                $keyI = $oneData[$column];
+            }
+            $data[$keyI] = $oneData;
+        }
+        return $data;
+    }
+
+
     public static function rewrite(string $str):string
     {
         return preg_replace("/[\/_|+ -]+/", '-', strtolower(trim(preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', iconv('UTF-8', 'ASCII//TRANSLIT', $str)), '-')));

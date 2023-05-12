@@ -5,7 +5,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 #backgroundMain{
-    background-image: url(/public/images/background.webp);
+    background-image: url(/public/images/background.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -16,7 +16,8 @@ body {
     top: 0;
     position: fixed;
     z-index: 0;
-    opacity: 0.6;
+    opacity: 0.3;
+    filter: blur(5px);
 }
 .warning{
     background-color: #f36363;
@@ -27,6 +28,8 @@ body {
 main{
     position: relative;
     z-index: 1;
+}
+main#ctAdmin{
     section{
         padding: 1rem;
         background: #333;
