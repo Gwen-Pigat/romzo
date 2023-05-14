@@ -1,11 +1,11 @@
 @import "@picocss/pico/scss/pico";
 
 body {
-    background-color: #333;
+    background-color: #fff;
     font-family: 'Roboto', sans-serif;
 }
 #backgroundMain{
-    background-image: url(/public/images/background.jpg);
+    background-image: url(/public/images/background.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -17,7 +17,6 @@ body {
     position: fixed;
     z-index: 0;
     opacity: 0.3;
-    filter: blur(5px);
 }
 .warning{
     background-color: #f36363;
@@ -29,14 +28,6 @@ main{
     position: relative;
     z-index: 1;
 }
-main#ctAdmin{
-    section{
-        padding: 1rem;
-        background: #333;
-        border-radius: 0.3rem;
-        box-shadow: 1px 1px 1px 10px #333;
-    }
-}
 html {
     height: 100%;
 }
@@ -44,12 +35,71 @@ body {
     min-height: 100%;
 }
 h1{
+    color: #333;
     text-align: center;
+    text-shadow: 1px 1px 3px #333;
+}
+h2{
+    color: #333;
+    text-shadow: 1px 1px 3px #333;
+}
+h3{
+    color: var(--primary);
+    text-shadow: 1px 1px 3px var(--primary);
 }
 :root {
-    --primary: #d81b60;
+    --primary: #00897b;
 }
 button.sm,a.sm{
     padding: 0.2rem 0.5rem;
     font-size: 0.8rem;
+}
+
+/* Teal Light scheme (Default) */
+/* Can be forced with data-theme="light" */
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+    --primary: #00897b;
+    --primary-hover: #00796b;
+    --primary-focus: rgba(0, 137, 123, 0.125);
+    --primary-inverse: #FFF;
+}
+
+/* Teal Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        --primary: #00897b;
+        --primary-hover: #009688;
+        --primary-focus: rgba(0, 137, 123, 0.25);
+        --primary-inverse: #FFF;
+    }
+}
+
+/* Teal Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+    --primary: #00897b;
+    --primary-hover: #009688;
+    --primary-focus: rgba(0, 137, 123, 0.25);
+    --primary-inverse: #FFF;
+}
+
+/* Teal (Common styles) */
+:root {
+    --form-element-active-border-color: var(--primary);
+    --form-element-focus-color: var(--primary-focus);
+    --switch-color: var(--primary-inverse);
+    --switch-checked-background-color: var(--primary);
+}
+
+section#login{
+    padding: 1rem;
+    background-color: #fff;
+}
+#ctAdmin{
+    section{
+        padding: 1rem;
+        background-color: #fff;
+    }
 }

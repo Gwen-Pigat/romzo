@@ -40,6 +40,9 @@ class Items
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $youtubeLink = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $orientation = null;
+
     public function __construct()
     {
         $this->itemsSpecsItems = new ArrayCollection();
@@ -160,6 +163,18 @@ class Items
     public function setYoutubeLink(?string $youtubeLink): self
     {
         $this->youtubeLink = $youtubeLink;
+
+        return $this;
+    }
+
+    public function getOrientation(): ?string
+    {
+        return $this->orientation;
+    }
+
+    public function setOrientation(?string $orientation): self
+    {
+        $this->orientation = $orientation;
 
         return $this;
     }

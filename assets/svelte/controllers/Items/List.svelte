@@ -26,6 +26,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Image</th>
+                    <th scope="col">Sens de jeux / format</th>
                     <th scope="col">Ordre</th>
                     <th scope="col">Actif</th>
                     <th scope="col"></th>
@@ -41,6 +42,7 @@
                             <img src="{item.image}" alt="{item.name}" width="150" loading="lazy" />
                         {/if}
                     </td>
+                    <td>{#if item.orientation}{item.orientation}{/if}</td>
                     <td>{#if item.placement}{item.placement}{/if}</td>
                     <td>
                         <fieldset>

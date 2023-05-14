@@ -46,7 +46,7 @@ class ItemsRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('i');
         if($mode === "scalar"){
-            $query->select("i.id,i.name,i.image,i.placement,i.isActive");
+            $query->select("i.id,i.name,i.image,i.placement,i.youtubeLink,i.orientation,i.isActive");
         }
         if($isActiveOnly === true){
             $query->andWhere('i.isActive = :val')

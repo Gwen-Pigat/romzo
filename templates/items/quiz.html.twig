@@ -4,13 +4,12 @@
 
 {% block body %}
     <h1>{{ constants.homeSentence }}</h1>
-
-    <section {{ svelte_component('Home', {
-        'items': items,
+    <section {{ svelte_component('Quiz', {
+        'itemsSpecs': itemsSpecs,
         'socials': socials,
         'paths':  {
+            'validateQuiz': path('app_quiz_validate_call'),
             'specsItems': path('app_items_specs_call'),
-            'quiz': path('app_quiz')
         }
     }) }}></section>
 

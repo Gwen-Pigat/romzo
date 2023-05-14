@@ -20,9 +20,8 @@
 
         const btnSubmit = document.getElementById(event.currentTarget.getAttribute("data-submit"))
         if(btnSubmit){
-            //btnSubmit.setAttribute("aria-busy","true")
+            btnSubmit.setAttribute("aria-busy","true")
         }
-
         const response = await fetch(event.currentTarget.getAttribute("data-path"), {
             method: 'POST',
             body: data
@@ -73,16 +72,11 @@
                 <h2>Renseigner les specs techniques</h2>
                 {#each itemsSpecs as itemSpec}
                     <label for="item-spec-{itemSpec.id}">{itemSpec.name}</label>
-                    <select id="item-spec-{itemSpec.id}" name="items_specs[{itemSpec.id}]">
-                        <option value="0">- - -</option>
-                        {#each {length: 5} as _, i}
-                            {#if item.itemsSpecsItems && item.itemsSpecsItems[itemSpec.id] && item.itemsSpecsItems[itemSpec.id] === (i+1)}
-                                <option selected="selected">{i+1}</option>
-                            {:else}
-                                <option>{i+1}</option>
-                            {/if}
-                        {/each}
-                    </select>
+                    {#if item.itemsSpecsItems && item.itemsSpecsItems[itemSpec.id]}
+                        <input type="number" step="0.1" id="item-spec-{itemSpec.id}" name="items_specs[{itemSpec.id}]" value="{item.itemsSpecsItems[itemSpec.id]["value"]}" />
+                    {:else}
+                        <input type="number" step="0.1" id="item-spec-{itemSpec.id}" name="items_specs[{itemSpec.id}]" />
+                    {/if}
                 {/each}
             </div>
         {/if}

@@ -62,7 +62,7 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/items/add.html.twig', [
             "title"=>"Modifier ".$items->getName(),
-            "item"=>ItemsService::wrapItemsToArray([$items])[0],
+            "item"=>ItemsService::wrapItemToArray($items),
             "user"=>$this->getUser(),
             "itemsSpecs"=>$this->itemsSpecsService->getItemsSpecs(),
             "itemForm"=>$this->createForm(ItemsType::class, $items)->createView(),

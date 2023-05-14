@@ -42,10 +42,14 @@ class ItemsSpecsRepository extends ServiceEntityRepository
     /**
      * @return ItemsSpecs[] Returns an array of Constants objects
      */
-    public function findAllItemsSpecs(bool $isActiveOnly=true): array
+    public function findAllItemsSpecs(bool $isActiveOnly=true, array $ids=[]): array
     {
         $query = $this->createQueryBuilder('i')
             ->select("i.id,i.name,i.placement,i.isActive");
+        if(!empty($ids)){
+            $query->andWhere("i.id IN (:ids)")
+                ->setParameter("ids", $ids);
+        }
         if($isActiveOnly === true) {
             $query->andWhere('i.isActive = :val')
                 ->setParameter('val', true);

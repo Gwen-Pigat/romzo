@@ -10,6 +10,10 @@ class CustomRequestMatcher
     private CONST ROUTES = [
         "app_admin",
         "app_admin_login_call",
+        "app_index",
+        "app_quiz",
+        "app_quiz_validate_call",
+        "app_items_specs_call"
     ];
 
     public function matches(Request $request): bool

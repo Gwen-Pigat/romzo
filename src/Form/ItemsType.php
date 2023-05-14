@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Items;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,6 +27,13 @@ class ItemsType extends AbstractType
             ->add('youtubeLink', TextType::class, [
                 "label"=>"Lien youtube",
                 "required"=>false
+            ])
+            ->add('orientation', ChoiceType::class, [
+                "label"=>"Sens de jeu / Format *",
+                'choices'  => [
+                    'V'=>'V',
+                    'H'=>"H"
+                ],
             ])
             ->add('placement', IntegerType::class, [
                 "label"=>"Emplacement",

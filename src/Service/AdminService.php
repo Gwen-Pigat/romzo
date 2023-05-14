@@ -80,7 +80,12 @@ class AdminService extends CoreService
                 }
                 $itemSpecItem->setRefItemsSpecs($itemSpec);
                 $itemSpecItem->setRefItems($items);
-                $itemSpecItem->setValue((int)$value);
+                if($value === ""){
+                    $value = null;
+                } else{
+                    $value = (int)$value;
+                }
+                $itemSpecItem->setValue($value);
                 $this->entityManager->persist($itemSpecItem);
             }
             $this->entityManager->flush();

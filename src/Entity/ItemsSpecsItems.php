@@ -21,8 +21,8 @@ class ItemsSpecsItems
     #[ORM\JoinColumn(nullable: false)]
     private ?ItemsSpecs $refItemsSpecs = null;
 
-    #[ORM\Column]
-    private ?int $value = null;
+    #[ORM\Column(nullable: true)]
+    private ?float $value = null;
 
     public function getId(): ?int
     {
@@ -53,12 +53,12 @@ class ItemsSpecsItems
         return $this;
     }
 
-    public function getValue(): ?int
+    public function getValue(): ?float
     {
         return $this->value;
     }
 
-    public function setValue(int $value): self
+    public function setValue(?float $value): self
     {
         $this->value = $value;
 
